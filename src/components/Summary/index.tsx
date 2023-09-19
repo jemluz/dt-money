@@ -3,28 +3,10 @@ import { SummaryCard, SummaryContainer } from "./styles";
 import { useContext } from "react";
 import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { priceFormatter } from "../../utils/formatter";
+import { useSummary } from "../../hooks/useSummary";
 
 export function Summary() {
-  const { transactions } = useContext(TransactionsContext);
-
-  const summary = transactions.reduce(
-    (final, transaction) => {
-      if (transaction.type === 'income') {
-        final.income += transaction.price;
-        final.total += transaction.price;
-      } else {
-        final.outcome += transaction.price;
-        final.total -= transaction.price;
-      }
-
-      return final;
-    },
-    {
-      income: 0,
-      outcome: 0,
-      total: 0
-    }
-  )
+  const summary = useSummary();
 
   return (
     <SummaryContainer>
